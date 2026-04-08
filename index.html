@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creato Barbershop - Professional Barber Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b14 25%, #4a2c1a 50%, #2d1b14 75%, #1a1a1a 100%);
+            background-attachment: fixed;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        .texture-overlay {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 53, 15, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(160, 82, 45, 0.2) 0%, transparent 50%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-image {
+            max-width: 600px;
+            width: 90%;
+            border-radius: 20px;
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.7),
+                0 0 0 1px rgba(212, 175, 55, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .hero-image:hover {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.02);
+            box-shadow: 
+                0 35px 70px rgba(0,0,0,0.8),
+                0 0 0 1px rgba(212, 175, 55, 0.5);
+        }
+        
+        .service-card {
+            background: rgba(45, 27, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        
+        .service-card:hover::before {
+            left: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            border-color: rgba(212, 175, 55, 0.6);
+        }
+        
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            border: 2px solid transparent;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .floating-icons {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .float-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 100%);
+            color: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .float-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.7);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 1s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="texture-overlay"></div>
+    
+    <!-- Floating WhatsApp Icons -->
+    <div class="floating-icons">
+        <a href="https://wa.me/212613698181" class="float-icon" target="_blank" title="WhatsApp 1">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://wa.me/212769446583" class="float-icon" target="_blank" title="WhatsApp 2">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <!-- Logo Title -->
+                <h1 class="text-7xl md:text-9xl lg:text-[10rem] font-bold logo-text mb-12 fade-in-up" style="animation-delay: 0.2s;">
+                    CREATO
+                    <span class="block text-4xl md:text-5xl lg:text-6xl font-light tracking-widest mt-4">BARBERSHOP</span>
+                </h1>
+                
+                <!-- Hero Image Placeholder - Replace with your photo -->
+                <div class="hero-image fade-in-up" style="animation-delay: 0.6s;">
+                    <img src="https://images.unsplash.com/photo-1578631618386-841739a8be19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                         alt="Creato Barbershop Interior" class="w-full h-auto rounded-2xl object-cover">
+                    <!-- Replace the img src with your actual barbershop photo URL -->
+                </div>
+                
+                <div class="mt-16 fade-in-up" style="animation-delay: 1s;">
+                    <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed opacity-90">
+                        Experience the art of precision grooming with our master barbers. 
+                        Classic styles. Modern edge. Unparalleled service.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a href="https://wa.me/212613698181" class="whatsapp-btn text-lg">
+                            <i class="fab fa-whatsapp"></i>
+                            Book Now +212 6 13 69 81 81
+                        </a>
+                        <a href="https://wa.me/212769446583" class="whatsapp-btn text-lg bg-gradient-to-r from-gray-800 to-gray-900 border-2 border-gold">
+                            <i class="fab fa-whatsapp"></i>
+                            +212 7 69 44 65 83
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-32 bg-gradient-to-b from-transparent to-black/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-24">
+                <h2 class="text-5xl md:text-6xl font-bold logo-text mb-6">OUR SERVICES</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-yellow-500 to-amber-600 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- Service Cards - Update with your actual services from photos -->
+                <div class="service-card fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="text-4xl mb-6"><i class="fas fa-cut text-yellow-500"></i></div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">Classic Haircut</h3>
+                    <p class="text-lg opacity-90 mb-6">Precision cuts with timeless style. Perfect fade, clean lines, and personalized styling.</p>
+                    <div class="text-2xl font-bold text-yellow-400">from 100 DH</div>
+                </div>
+                
+                <div class="service-card fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="text-4xl mb-6"><i class="fas fa-hand-holding-heart text-yellow-500"></i></div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">Beard Trim & Shape</h3>
+                    <p class="text-lg opacity-90 mb-6">Expert beard grooming with hot towel service and premium products.</p>
+                    <div class="text-2xl font-bold text-yellow-400">from 80 DH</div>
+                </div>
+                
+                <div class="service-card fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="text-4xl mb-6"><i class="fas fa-spa text-yellow-500"></i></div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">Hot Shave</h3>
+                    <p class="text-lg opacity-90 mb-6">Traditional straight razor shave with pre-shave oil and hot towels.</p>
+                    <div class="text-2xl font-bold text-yellow-400">120 DH</div>
+                </div>
+                
+                <div class="service-card fade-in-up" style="animation-delay: 0.8s;">
+                    <div class="text-4xl mb-6"><i class="fas fa-child text-yellow-500"></i></div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">Kids Cut</h3>
+                    <p class="text-lg opacity-90 mb-6">Gentle haircuts for children with extra patience and care.</p>
+                    <div class="text-2xl font-bold text-yellow-400">from 70 DH</div>
+                </div>
+                
+                <div class="service-card fade-in-up" style="animation-delay: 1s;">
+                    <div class="text-4xl mb-6"><i class="fas fa-magic text-yellow-500"></i></div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">Deluxe Experience</h3>
+                    <p class="text-lg opacity-90 mb-6">Full service: haircut, beard trim, hot shave, and luxury wash.</p>
+                    <div class="text-2xl font-bold text-yellow-400">250 DH</div>
+                </div>
+                
+                <div class="service-card fade-in-up" style="animation-delay: 1.2s;">
+                    <div class="text-4xl mb-6"><i class="fas fa-crown text-yellow-500"></i></div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">VIP Package</h3>
+                    <p class="text-lg opacity-90 mb-6">Ultimate grooming experience with premium products and extended service.</p>
+                    <div class="text-2xl font-bold text-yellow-400">350 DH</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-black/80 border-t-4 border-yellow-500/50">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold logo-text mb-8">CREATO BARBERSHOP</h2>
+            <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Where tradition meets modern style. Book your appointment today.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 mb-12">
+                <a href="https://wa.me/212613698181" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> +212 6 13 69 81 81
+                </a>
+                <a href="https://wa.me/212769446583" class="whatsapp-btn bg-gradient-to-r from-green-600 to-green-500">
+                    <i class="fab fa-whatsapp"></i> +212 7 69 44 65 83
+                </a>
+            </div>
+            <div class="text-lg opacity-75">
+                © 2024 Creato Barbershop. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling and animations
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // WhatsApp click tracking
+        document.querySelectorAll('.whatsapp-btn, .float-icon').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Add any analytics tracking here
+                console.log('WhatsApp button clicked');
+            });
+        });
+    </script>
+</body>
+</html>
